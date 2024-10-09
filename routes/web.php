@@ -17,7 +17,8 @@ Route::middleware('auth')->group(function(){
     Route::delete('/datatower/{id}', [towerController::class, 'destroy'])->name('datatower.delete');
     
     Route::post('/importtower', [towerController::class, 'import'])->name('importtower');
-
+    
+    Route::delete('/importdox/{id}', [doxController::class, 'destroy'])->name('doxdelete');
     Route::post('/importdox/{id}', [doxController::class, 'Upload'])->name('doxupload');
 
     Route::get('/addtower', [towerController::class, 'viewAdd'])->name('addtower');

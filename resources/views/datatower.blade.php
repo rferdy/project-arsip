@@ -218,18 +218,37 @@
                             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="text-bold" id="DoxCC">Import Dokumen</h5>
+                                        <h5 class="text-bold" id="DoxCC">Form Dokumen</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <form method="POST" action="{{route('doxupload', $data->id)}}" enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="modal-body">
-                                            <div class="input-group prepend mb-3">
-                                                <input class="form-control" type="file" name="document" id="file">
-                                            </div>
-                                            <button class="btn btn-success" type="submit">Import</button>
+                                    <div class="modal-body">
+                                        <div class="mt-2 mb-3">
+                                            @if ($data->documents->isNotEmpty())
+                                                @foreach ($data->documents as $dokumen)
+                                                    <div class="card d-flex flex-row justify-content-between p-3">
+                                                        <a href="{{Storage::url($dokumen->file_path)}}" target="_blank">{{$dokumen->file_name}}</a>
+                                                        <form action="{{route('doxdelete', $dokumen->id)}}" method="post">
+                                                            @csrf
+                                                            @method('delete')
+                                                            <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                                        </form>
+                                                    </div>
+                                                @endforeach
+                                            @else
+                                                tidak ada dokumen
+                                            @endif
                                         </div>
-                                    </form>
+                                        <div class="mt-4 border-top border-2 p-3">
+                                            <form method="POST" action="{{route('doxupload', $data->id)}}" enctype="multipart/form-data">
+                                                @csrf
+                                                <div class="input-group prepend mb-3">
+                                                    <label class="input-group-text" for="file">Tambah Dokumen</label>
+                                                    <input class="form-control" type="file" name="document" id="file">
+                                                </div>
+                                                <button class="btn btn-primary" type="submit"><i class="fa fa-plus"></i> Import</button>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

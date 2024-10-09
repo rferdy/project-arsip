@@ -23,4 +23,11 @@ class doxController extends Controller
         return redirect()->route('datatower')->with('success', 'Dokumen Berhasil Ditambahkan!');
         return back()->with('error', 'Dokumen Harus Bertipe Data PDF, DOC, DOCX!');
     }
+
+    public function destroy(string $id) {
+        $doxup = dokumenUpload::find($id);
+        $doxup->delete();
+
+        return back()->with('success', 'Dokumen Berhasil Dihapus');
+    }
 }
